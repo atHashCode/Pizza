@@ -2,34 +2,48 @@ package com.atsistemas.hashcode.pizza;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PizzaRepositorio {
-	
-    public List<Celda> cargaCeldas(File input) throws IOException {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Repositorio {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Repositorio.class);
+    private File input;
+	private File output;
+
+	public Repositorio(String inputFile, String outputFile) {
+        this.input = new File(inputFile);
+        this.output = new File(outputFile);
+	}
+
+	public List<List<Celda>> cargaCeldas() throws IOException {
         try (FileReader fileReader = new FileReader(input)) {
             BufferedReader br = new BufferedReader(fileReader);
             br.readLine();
-            List<Celda> celdas = new ArrayList<>();
+            List<List<Celda>> celdas = new ArrayList<>();
             int row = 0;
             String fileLine;
             while ((fileLine = br.readLine()) != null) {
+                List<Celda> fila = new ArrayList<>();
                 for (int column = 0; column < fileLine.length(); column++) {
                     Character literal = fileLine.charAt(column);
 
-                    celdas.add(new Celda(row, column, literal.toString()));
+                    fila.add(new Celda(row, column, literal.toString()));
                 }
+                celdas.add(fila);
                 row++;
             }
             return celdas;
         }
-    }
-    
+    } 
 
-    public Restriccion cargaRestriccion(File input) throws IOException {
+    public Restriccion cargaRestriccion() throws IOException {
     	try (FileReader fileReader = new FileReader(input)) {
             BufferedReader br = new BufferedReader(fileReader);
             String[] tokens = br.readLine().split(" ");
@@ -37,5 +51,13 @@ public class PizzaRepositorio {
             int maxCeldasPorcion = Integer.parseInt(tokens[3]);
             return new Restriccion(minIngredientesPorcion, maxCeldasPorcion);
         }
+	}
+
+	public void grabaSolucion(Solucion solucion) {
+        try (FileWriter fileWriter = new FileWriter(output)) {
+        	fileWriter.write(solucion.toString());
+        } catch (IOException e) {
+			LOGGER.error(e.getMessage());
+		}
 	}
 }
