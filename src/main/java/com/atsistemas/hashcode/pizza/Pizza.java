@@ -14,7 +14,7 @@ public class Pizza {
     private List<List<Celda>> celdas;
 
     public Pizza(String inputFile, String outputFile) {
-    	LOGGER.debug("Inicio de " + inputFile);
+    	LOGGER.info("Inicio de " + inputFile);
     	repo = new Repositorio(inputFile, outputFile);
 
         try {
@@ -35,12 +35,12 @@ public class Pizza {
 
 
 	public void trozeaPizza() {
-		LOGGER.info("Restricciones "+restriccion);
-		LOGGER.info("celdas "+celdas.subList(0, (celdas.size()>20)?20:celdas.size()));
+		LOGGER.debug("Restricciones "+restriccion);
+		LOGGER.debug("celdas "+celdas.subList(0, (celdas.size()>20)?20:celdas.size()));
     	long comienzo = System.currentTimeMillis();
 
     	Solucion solucion = new Solucion(restriccion, celdas);
-        LOGGER.debug("Tiempo de calculo "+(System.currentTimeMillis()-comienzo));
+        LOGGER.info("Tiempo de calculo "+(System.currentTimeMillis()-comienzo));
         repo.grabaSolucion(solucion);
 	}
 

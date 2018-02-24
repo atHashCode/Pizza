@@ -1,9 +1,15 @@
 package com.atsistemas.hashcode.pizza;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class App 
 {
 	public static void main(String[] args) {
-		for (int i= 0 ; i < 10; i++) {
+
+	    final Logger LOGGER = LoggerFactory.getLogger(App.class);
+		for (int i= 0 ; i < 1000; i++) {
+			LOGGER.info("Iteraccion "+i);
 			new Pizza("ficheros/example.in", "resultado/example").trozeaPizza();
 			new Pizza("ficheros/medium.in", "resultado/medium").trozeaPizza();
 			new Pizza("ficheros/small.in", "resultado/small").trozeaPizza();

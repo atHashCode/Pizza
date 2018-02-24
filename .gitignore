@@ -1,5 +1,6 @@
-/target/
+*/target/**
+*/.settings/**
+*.log
 /.classpath
 /.project
-/pizzaSlicingAudit.log
-/pizzaSlicingDebug.log
+resultado

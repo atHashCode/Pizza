@@ -17,7 +17,7 @@ public class Porcion {
 
 		if ((rowIni > cells.size() - 1) || (colIni > cells.get(0).size() - 1))
 			throw new SizeLimitExceededException("Dimensiones fuera de rango (" + rowIni + ", " + colIni +")");
-		LOGGER.info("Porcion desde (" + rowIni + ", " + colIni +")");
+		LOGGER.debug("Porcion desde (" + rowIni + ", " + colIni +")");
 		for (int i = rowIni; i <= cells.size() - 1; i++) {
 			List<Celda> fila = cells.get(i);
 			List<Celda> filaExtraida = new ArrayList<>();
@@ -31,11 +31,11 @@ public class Porcion {
 		if ((rowIni > cells.size() - 1) || (colIni > cells.get(0).size() - 1) ||
 				(rowFin > cells.size() - 1) || (colFin > cells.get(0).size() - 1))
 			throw new SizeLimitExceededException("Dimensiones fuera de rango (" + rowIni+", " + colIni + ") a (" + rowFin+", " + colFin + ")");
-		LOGGER.info("Porcion desde (" + rowIni+", " + colIni + ") a (" + rowFin+", " + colFin + ")");
-		for (int i = rowIni; i <= rowFin - 1; i++) {
+		LOGGER.debug("Porcion desde (" + rowIni+", " + colIni + ") a (" + rowFin+", " + colFin + ")");
+		for (int i = rowIni; i <= rowFin; i++) {
 			List<Celda> fila = cells.get(i);
 			List<Celda> filaExtraida = new ArrayList<>();
-			for (int j = colIni; j <= colFin - 1; j++)
+			for (int j = colIni; j <= colFin; j++)
 				filaExtraida.add(fila.get(j));
 			this.celdas.add(filaExtraida);
 		}
@@ -60,8 +60,8 @@ public class Porcion {
 				else
 					tomatoes++;
 
-				if ((mushroom > restriccion.getMinIngredientesPorcion()) &&
-						(tomatoes > restriccion.getMinIngredientesPorcion()))
+				if ((mushroom >= restriccion.getMinIngredientesPorcion()) &&
+						(tomatoes >= restriccion.getMinIngredientesPorcion()))
 					return Validez.VALIDA;
 			}
 		}
@@ -97,8 +97,8 @@ public class Porcion {
 	@Override
 	public String toString() {
 		return celdas.get(0).get(0).getRow()+" "+ 
+				   celdas.get(0).get(0).getCol()+" "+ 
 			   celdas.get(celdas.size()-1).get(0).getRow()+" "+
-			   celdas.get(0).get(0).getCol()+" "+ 
 			   celdas.get(celdas.size()-1).get(celdas.get(celdas.size()-1).size()-1).getCol()+" ";
 	}
 	
