@@ -3,4 +3,4 @@
 *.log
 /.classpath
 /.project
-resultado
+/target/
