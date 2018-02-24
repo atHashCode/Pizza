@@ -39,7 +39,7 @@ public class Pizza {
 		LOGGER.debug("celdas "+celdas.subList(0, (celdas.size()>20)?20:celdas.size()));
     	long comienzo = System.currentTimeMillis();
 
-    	Solucion solucion = new Solucion(restriccion, celdas);
+    	Solucion solucion = new Solucion(restriccion, celdas, 2);
         LOGGER.info("Tiempo de calculo "+(System.currentTimeMillis()-comienzo));
         repo.grabaSolucion(solucion);
 	}
