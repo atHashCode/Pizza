@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,11 +16,11 @@ public class Repositorio {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(Repositorio.class);
     private File input;
-	private File output;
+	private String output;
 
 	public Repositorio(String inputFile, String outputFile) {
         this.input = new File(inputFile);
-        this.output = new File(outputFile);
+        this.output = outputFile;
 	}
 
 	public List<List<Celda>> cargaCeldas() throws IOException {
@@ -54,7 +55,8 @@ public class Repositorio {
 	}
 
 	public void grabaSolucion(Solucion solucion) {
-        try (FileWriter fileWriter = new FileWriter(output)) {
+		Long puntuacion = solucion.getPuntuacion();
+        try (FileWriter fileWriter = new FileWriter(new File(this.output + "(" + puntuacion + ")" + new Random().nextInt() + ".txt"))) {
         	fileWriter.write(solucion.toString());
         } catch (IOException e) {
 			LOGGER.error(e.getMessage());

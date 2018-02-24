@@ -2,7 +2,6 @@ package com.atsistemas.hashcode.pizza;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,6 +14,7 @@ public class Pizza {
     private List<List<Celda>> celdas;
 
     public Pizza(String inputFile, String outputFile) {
+    	LOGGER.debug("Inicio de " + inputFile);
     	repo = new Repositorio(inputFile, outputFile);
 
         try {
@@ -36,12 +36,11 @@ public class Pizza {
 
 	public void trozeaPizza() {
 		LOGGER.info("Restricciones "+restriccion);
-		LOGGER.info("celdas "+celdas);
+		LOGGER.info("celdas "+celdas.subList(0, (celdas.size()>20)?20:celdas.size()));
     	long comienzo = System.currentTimeMillis();
-    	int colIni = new Random().nextInt((celdas.get(0).size()/2) + 1);
-    	int rowIni = new Random().nextInt((celdas.size()/2) + 1);
-    	Solucion solucion = new Solucion(restriccion, celdas,rowIni ,colIni);
-        LOGGER.info("Tiempo de calculo "+(System.currentTimeMillis()-comienzo));
+
+    	Solucion solucion = new Solucion(restriccion, celdas);
+        LOGGER.debug("Tiempo de calculo "+(System.currentTimeMillis()-comienzo));
         repo.grabaSolucion(solucion);
 	}
 
